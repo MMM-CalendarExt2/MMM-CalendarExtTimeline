@@ -1,0 +1,104 @@
+.CEXTML {
+  line-height:1em;
+}
+
+.CEXTML *{
+  box-sizing:border-box;
+}
+
+.CEXTML .current_timeline {
+  width:0px;
+  height:24px;
+  position:absolute;
+  border-left:2px solid #F00;
+  top:10px;
+}
+
+.CEXTML .holder {
+  position:relative;
+  width:100%;
+  height:100%;
+
+}
+
+.CEXTML .eventPositionLine {
+  position:relative;
+  width:100%;
+  height:24px;
+  line-height:24px;
+  margin:1px 0;
+}
+
+.CEXTML .event {
+  position:absolute;
+  height:24px;
+  font-size:14px;
+  line-height:24px;
+  overflow:hidden;
+  padding-left:6px;
+  text-align:left;
+}
+
+.CEXTML .event.startHere {
+  border-top-left-radius:12px;
+  border-bottom-left-radius:12px;
+}
+
+.CEXTML .event.endHere {
+  border-top-right-radius:12px;
+  border-bottom-right-radius:12px;
+}
+
+.CEXTML .timeCol td {
+  padding:0;
+  margin:0;
+  text-align:left;
+  padding-left:2px;
+  border-left:1px solid #999;
+}
+
+.CEXTML .timeCol table {
+  position:relative;
+  height:24px;
+  overflow: hidden;
+}
+
+.CEXTML .timeCol p {
+  padding:0;
+  margin:0;
+}
+
+.CEXTML th.timeCol {
+  width:90%;
+  font-weight:normal;
+  font-size:initial;
+  border-bottom:1px solid #999;
+  position:relative;
+  height:24px;
+}
+
+.CEXTML th.titleCol {
+  max-width:10%;
+  font-weight:normal;
+  font-size:initial;
+  border-bottom:1px solid #999;
+  height:24px;
+}
+
+.CEXTML td.schedules {
+  width:90%;
+  font-weight:normal;
+  font-size:initial;
+  border-bottom:1px solid #999;
+  position:relative;
+}
+
+
+.CEXTML td.calendar {
+  max-width:10%;
+  font-weight:normal;
+  font-size:initial;
+  border-bottom:1px solid #999;
+  background-color:#333;
+
+}
