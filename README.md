@@ -51,3 +51,11 @@ end_hour: 6,
 ```
 If current time be 13:45, This would show schedules which goes from 13:00 to 19:00. The view will be changed automatically by time.
 `begin_hour` will be ignored when type is set to `dynamic`.
+
+### I just want to display only this module, not `MMM-CalendarExt` ###
+In your configuration of `MMM-CalendarExt`, modify this.
+```javascript
+config: {
+        system: {
+          show: [], // set this field blank.
+```
