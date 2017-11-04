@@ -206,7 +206,6 @@ Module.register("MMM-CalendarExtTimeline",{
 				}
 			}
 		})
-		console.log("stack", stack)
 		stack.forEach(function(s) {
 			var line = document.createElement("div")
 			line.className = "eventPositionLine"
