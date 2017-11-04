@@ -49,5 +49,5 @@ This will show timeline from `this hour` during `end_hour` now.
 type:"dynamic",
 end_hour: 6,
 ```
-If current time be 13:45, This would show from 13:00 to 19:00. The view will be changed automatically by time.
+If current time be 13:45, This would show schedules which goes from 13:00 to 19:00. The view will be changed automatically by time.
 `begin_hour` will be ignored when type is set to `dynamic`.
