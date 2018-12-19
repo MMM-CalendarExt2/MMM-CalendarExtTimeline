@@ -14,6 +14,10 @@ cd <your MagicMirror Directory>/modules
 git clone https://github.com/eouia/MMM-CalendarExtTimeline
 ```
 
+## Update ##
+**2018-12-19**
+- `MMM-CalendarExt2` supported.
+
 ## Configuration ##
 ```javascript
 {
@@ -24,16 +28,17 @@ git clone https://github.com/eouia/MMM-CalendarExtTimeline
     refresh_interval_sec: 60, // minimum 60,
     table_title_format: "ddd, MMM Do",
     begin_hour: 0, //ignored when you set type to 'dynamic'
-    end_hour: 6, //how many hours to show. 
-    time_display_section_count: 6, 
+    end_hour: 6, //how many hours to show.
+    time_display_section_count: 6,
     time_display_section_format: "HH:mm",
     calendars: ["your calendar name", "another name"] //in your `MMM-CalendarExt` configuration
+    source: "CALEXT2", // or "CALEXT"
   }
 }
 ```
 ### type:"static" or "dynamic"
 #### type:"static"
-This will show timeline from `begin_hour` to `end_hour` of today. 
+This will show timeline from `begin_hour` to `end_hour` of today.
 
 By example)
 ```javascript

@@ -23,6 +23,7 @@ Module.register("MMM-CalendarExtTimeline",{
 		time_display_section_count: 6,
 		time_display_section_format: "hh:mm a",
 		calendars: [],
+		source: "CALEXT2", // "CALEXT" or "CALEXT2"
 	},
 
 	start: function() {
@@ -149,6 +150,13 @@ Module.register("MMM-CalendarExtTimeline",{
 		if (notification == "CALEXT_SAYS_SCHEDULE") {
 			this.updateContent(payload)
 		}
+
+		if (notification == "CALEXT2_CALENDAR_MODIFIED") {
+			var self = this
+			setTimeout(function(){
+				self.updateRequest2()
+			}, 1000)
+		}
 	},
 
 	makeEvents: function(name, parentDom) {
@@ -157,9 +165,11 @@ Module.register("MMM-CalendarExtTimeline",{
 		var totalGap = endTime.format("x") - startTime.format("x")
 		var events = []
 		var stack = [[]]
+		var self = this
 		this.events.forEach(function(e) {
-			if (e.name) {
-				if (e.name == name) {
+			var eName = e.name
+			if (eName) {
+				if (eName == name) {
 					var eStart = moment.unix(e.startDate / 1000)
 					var eEnd = moment.unix(e.endDate / 1000)
 					var isValid = false
@@ -209,6 +219,7 @@ Module.register("MMM-CalendarExtTimeline",{
 		stack.forEach(function(s) {
 			var line = document.createElement("div")
 			line.className = "eventPositionLine"
+			if (self.config.source == "CALEXT2") line.className += " CX2"
 			s.forEach(function(e) {
 				var eStart = moment.unix(e.startDate / 1000)
 				var eEnd = moment.unix(e.endDate / 1000)
@@ -239,13 +250,10 @@ Module.register("MMM-CalendarExtTimeline",{
 				if (e.fullDayEvent) {
 					ev.className += " fulldayevent"
 				}
-
 				line.appendChild(ev)
 			})
-
 			parentDom.appendChild(line)
 		})
-
 		return parentDom
 	},
 
@@ -276,5 +284,33 @@ Module.register("MMM-CalendarExtTimeline",{
 		  sessionId: moment().format('x')
 		}
 		this.sendNotification("CALEXT_TELL_SCHEDULE", payload)
+	},
+
+	updateRequest2: function() {
+		var payload = {
+		  filter: (e) => {
+				var from = moment().startOf("day").format("X")
+				var to = moment().endOf("day").format("X")
+				if (this.names.indexOf(e.calendarName) < 0) return false
+				if (e.startDate > to || e.endDate < from) return false
+				return true
+			},
+		  callback: (events) => {
+				if (events.length > 0) {
+					for (i = 0; i < events.length; i++) {
+						events[i].name = events[i].calendarName
+						events[i].startDate = events[i].startDate * 1000
+						events[i].endDate = events[i].endDate * 1000
+						events[i].styleName = events[i].className
+					}
+					var payload = {
+						message: "SCHEDULE_FOUND",
+						events: events
+					}
+					this.updateContent(payload)
+				}
+			}
+		}
+		this.sendNotification("CALEXT2_EVENT_QUERY", payload)
 	}
 })
