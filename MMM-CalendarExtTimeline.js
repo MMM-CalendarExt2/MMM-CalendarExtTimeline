@@ -194,8 +194,7 @@ Module.register("MMM-CalendarExtTimeline",{
 								var ee = s[i]
 								var eeStart = moment.unix(ee.startDate / 1000)
 								var eeEnd = moment.unix(ee.endDate / 1000)
-								var isCrossed = eStart.isBetween(eeStart, eeEnd, "minute", "[)")
-									|| eEnd.isBetween(eeStart, eeEnd, "minute", "(]")
+								var isCrossed = !(eStart.isAfter(eeEnd) || eEnd.isBefore(eeStart))
 								if (isCrossed) {
 									fitToStack = false
 									break
@@ -216,6 +215,7 @@ Module.register("MMM-CalendarExtTimeline",{
 				}
 			}
 		})
+		console.log(stack)
 		stack.forEach(function(s) {
 			var line = document.createElement("div")
 			line.className = "eventPositionLine"
