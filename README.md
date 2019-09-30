@@ -1,5 +1,5 @@
 # MMM-CalendarExtTimeline
-Display current timeline schedules. This is a plugin module for `MMM-CalendarExt`
+Display current timeline schedules. This is a plugin module for `MMM-CalendarExt`and `MMM-CalendarExt2`
 
 ## Screenshot ##
 ![screenshot](https://raw.githubusercontent.com/eouia/MMM-CalendarExtTimeline/master/timeline_static.jpg)
