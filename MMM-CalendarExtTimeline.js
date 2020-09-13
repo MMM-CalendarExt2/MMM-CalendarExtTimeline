@@ -20,6 +20,7 @@ Module.register("MMM-CalendarExtTimeline",{
 		table_title_format: "ddd, MMM Do",
 		begin_hour: 8,
 		end_hour: 20,
+		fromNow: 0,
 		time_display_section_count: 6,
 		time_display_section_format: "hh:mm a",
 		calendars: [],
@@ -48,8 +49,8 @@ Module.register("MMM-CalendarExtTimeline",{
 			this.endTime = moment().startOf("hour")
 				.add(this.config.end_hour, "hours").startOf("hour")
 		} else {
-			this.startTime = moment().hour(this.config.begin_hour).startOf("hour")
-			this.endTime = moment().hour(this.config.end_hour).startOf("hour")
+			this.startTime = moment().hour(this.config.begin_hour).startOf("hour").add(this.config.fromNow, "days")
+			this.endTime = moment().hour(this.config.end_hour).startOf("hour").add(this.config.fromNow, "days")
 		}
 		this.hour_diff_sec = Math.round(
 			this.endTime.diff(this.startTime, "seconds")
@@ -65,7 +66,7 @@ Module.register("MMM-CalendarExtTimeline",{
 		var frameHeader = document.createElement("thead")
 		var frameHeaderRow = document.createElement("tr")
 		var headerTitleCell = document.createElement("th")
-		headerTitleCell.innerHTML = moment().format(this.config.table_title_format)
+		headerTitleCell.innerHTML = this.startTime.format(this.config.table_title_format)
 		headerTitleCell.className = "titleCol"
 		var headerTimeCell = document.createElement("th")
 		headerTimeCell.className = "timeCol"
@@ -288,20 +289,25 @@ Module.register("MMM-CalendarExtTimeline",{
 
 	updateRequest2: function() {
 		var payload = {
-		  filter: (e) => {
-				var from = moment().startOf("day").format("X")
-				var to = moment().endOf("day").format("X")
+			filter: (e) => {
+				var from = moment().startOf("day").add(this.config.fromNow, 'days').format("X")
+				var to = moment().endOf("day").add(this.config.fromNow, 'days').format("X")
 				if (this.names.indexOf(e.calendarName) < 0) return false
 				if (e.startDate > to || e.endDate < from) return false
 				return true
 			},
-		  callback: (events) => {
+			callback: (events) => {
 				if (events.length > 0) {
 					for (i = 0; i < events.length; i++) {
 						events[i].name = events[i].calendarName
 						events[i].startDate = events[i].startDate * 1000
 						events[i].endDate = events[i].endDate * 1000
 						events[i].styleName = events[i].className
+
+						if (typeof this.config.transform == "function") {
+							var ev = Object.assign({}, events[i])
+							events[i] = this.config.transform(ev)
+						}
 					}
 					var payload = {
 						message: "SCHEDULE_FOUND",
