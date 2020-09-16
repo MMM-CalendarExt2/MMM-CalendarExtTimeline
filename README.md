@@ -29,6 +29,7 @@ git clone https://github.com/eouia/MMM-CalendarExtTimeline
     table_title_format: "ddd, MMM Do",
     begin_hour: 0, //ignored when you set type to 'dynamic'
     end_hour: 6, //how many hours to show.
+    fromNow: 0, // add this many days to today's current date, e.g., 1 is tomorrow, -1 is yesterday
     time_display_section_count: 6,
     time_display_section_format: "HH:mm",
     calendars: ["your calendar name", "another name"] //in your `MMM-CalendarExt` configuration
@@ -56,6 +57,19 @@ end_hour: 6,
 ```
 If current time be 13:45, This would show schedules which goes from 13:00 to 19:00. The view will be changed automatically by time.
 `begin_hour` will be ignored when type is set to `dynamic`.
+
+### transform
+See [Transforming in MMM-CalendarExt2](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2/blob/master/docs/Filtering-and-Sorting.md#transforming). A `transform` key can be added to the MMM-CalendarExtTimeline config in the same way, for example:
+
+```javascript
+transform: (event) => {
+  if (event.title.includes("Meeting")) {
+    event.styleName = "meeting-style" // Change the CSS class name to highlight meetings
+  }
+  return event
+}
+```
+
 
 ### I just want to display only this module, not `MMM-CalendarExt` ###
 In your configuration of `MMM-CalendarExt`, modify this.
