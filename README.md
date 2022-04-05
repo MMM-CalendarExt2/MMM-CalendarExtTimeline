@@ -32,7 +32,7 @@ git clone https://github.com/eouia/MMM-CalendarExtTimeline
     fromNow: 0, // add this many days to today's current date, e.g., 1 is tomorrow, -1 is yesterday
     time_display_section_count: 6,
     time_display_section_format: "HH:mm",
-    calendars: ["your calendar name", "another name"] //in your `MMM-CalendarExt` configuration
+    calendars: ["your calendar name", "another name"], //in your `MMM-CalendarExt` configuration
     source: "CALEXT2", // or "CALEXT"
   }
 }
